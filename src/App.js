@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import List from "./components/List";
+import Footer from "./components/Footer";
 
 function App() {
+  const title = 'TodoApp';
+  let items = [];
+
+  const add = (item) => {
+    items.push(item);
+    console.log('add item');
+  }
+
+  const remove = (item) => {
+    items = items.filter( currentItem => currentItem !== item );
+    console.log('remove item');
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <section className="todoapp">
+      <Header title={title} />
+      <List items={items} removeItem={remove} addItem={add} />
+      <Footer />
+    </section>
+  )
 }
 
 export default App;
