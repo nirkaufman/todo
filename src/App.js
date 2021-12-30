@@ -2,13 +2,13 @@ import './App.css';
 import Header from "./components/Header";
 import List from "./components/List";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function App() {
   console.log('App executed');
-  
   const [items, setItems] = useState([]);
-  const [counter, setCount] = useState(1);
+  const counter = useRef(0);
+
   const title = 'TodoApp';
 
   useEffect(() => {
@@ -16,11 +16,18 @@ function App() {
       .then(res => res.json())
       .then(items => setItems(items))
   }, [])
-
+  useEffect(() => {
+    // console.log('items array changed!', items)
+    console.log(counter);
+  }, [items]);
 
   const add = (item) => {
-    setItems([...items, item]);
-    setCount(counter + 1);
+    if(counter.current > 5) {
+      alert('you reached the limit')
+    } else {
+      setItems([...items, item]);
+      counter.current += 1;
+    }
   }
 
   const remove = (item) => {
